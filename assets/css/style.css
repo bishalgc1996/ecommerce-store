@@ -66,6 +66,7 @@ button:hover {
   padding-bottom: 2rem !important;
   top: 0;
   left: 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -287,4 +288,8 @@ footer .copyright a:hover {
 
 footer p {
   color: #fff;
+}
+
+footer .copyright img {
+  width: 30%;
 }
