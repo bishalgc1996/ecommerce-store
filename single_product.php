@@ -1,10 +1,35 @@
+<?php
+
+include('server/connection.php');
+
+if ( isset( $_GET['product_id'] ) ) {
+
+	$product_id = $_GET['product_id'];
+
+
+	$stmt = $conn->prepare( "SELECT * FROM products WHERE product_id=?" );
+
+
+	$stmt->bind_param( "i", $product_id );
+
+
+	$stmt->execute();
+
+	$product = $stmt->get_result();
+
+} else {
+	header( 'location: index.php' );
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE-edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Home</title>
+    <title>Single Product</title>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -24,9 +49,7 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 fixed-top">
     <div class="container">
-        <a href="index.html"
-        ><img src="assets/imgs/logo.jpeg" class="logo"
-            /></a>
+        <img src="assets/imgs/logo.jpeg" class="logo"/>
         <h2 class="brand">Orange</h2>
         <button
                 class="navbar-toggler"
@@ -54,166 +77,82 @@
                     <a class="nav-link" href="#">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact Us</a>
+                    <a class="nav-link" href="#">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a href="cart.html"><i class="fal fa-shopping-bag"></i></a>
-                    <a href="account.html"><i class="fal fa-user-alt"></i></a>
+                    <i class="fal fa-shopping-bag"></i>
+                    <i class="fal fa-user-alt"></i>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-
-<!--Home-->
-<section id="home">
-    <div class="container">
-        <h5>NEW ARRIVALS</h5>
-        <h1><span>Best Prices </span>This Season</h1>
-        <p>Eshop offers the best products for the most affordable prices</p>
-        <button>Shop Now</button>
-    </div>
-</section>
-
-<!--Brand-->
-<section id="brand" class="container">
-    <div class="row">
-        <img
-                class="img-fluid col-lg-3 col-md-6 col-sm-12"
-                src="assets/imgs/brand1.jpeg"
-        />
-        <img
-                class="img-fluid col-lg-3 col-md-6 col-sm-12"
-                src="assets/imgs/brand2.jpeg"
-        />
-        <img
-                class="img-fluid col-lg-3 col-md-6 col-sm-12"
-                src="assets/imgs/brand3.jpeg"
-        />
-        <img
-                class="img-fluid col-lg-3 col-md-6 col-sm-12"
-                src="assets/imgs/brand4.jpeg"
-        />
-    </div>
-</section>
-<!--New-->
-<section id="new" class="w-100">
-    <div class="row p-0 m-0">
-        <!--One-->
-        <div class="one col-lg-4 col-md-12 col-sm-12 p-0">
-            <img class="img-fluid" src="assets/imgs/1.jpeg"/>
-            <div class="details">
-                <h2>Extremely Awesomw Shoes</h2>
-                <button class="text-uppercase">Shop Now</button>
-            </div>
-        </div>
-
-        <!--Two-->
-        <div class="one col-lg-4 col-md-12 col-sm-12 p-0">
-            <img class="img-fluid" src="assets/imgs/2.jpeg"/>
-            <div class="details">
-                <h2>50% OFF</h2>
-                <button class="text-uppercase">Shop Now</button>
-            </div>
-        </div>
-
-        <!--Three-->
-        <div class="one col-lg-4 col-md-12 col-sm-12 p-0">
-            <img class="img-fluid" src="assets/imgs/3.jpeg"/>
-            <div class="details">
-                <h2>Extremely Awesomw Shoes</h2>
-                <button class="text-uppercase">Shop Now</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!--Featured-->
-<section id="featured" class="my-5 pb-5">
-    <div class="container text-center mt-5 py-5">
-        <h3>Our Featured</h3>
-        <hr class="mx-auto"/>
-        <p>Here you can check out our new featured products</p>
-    </div>
-    <div class="row mx-auto container-fluid">
+<!--Singe Product-->
+<section class="container single-product my-5 pt-5">
+    <div class="row mt-5">
 		<?php
-		include( 'server/get_featured_products.php' );
-		while ( $row = $featured_products->fetch_assoc() ) {
+		while ( $row = $product->fetch_assoc() ) {
 			?>
-
-            <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-                <img class="img-fluid mb-3"
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <img id="mainImg" class="img-fluid w-100 pb-1"
                      src="assets/imgs/<?php echo $row['product_image']; ?>"/>
-                <div class="star">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                <div class="small-img-group">
+                    <div class="small-img-col">
+                        <img
+                                src="assets/imgs/<?php echo $row['product_image']; ?>"
+                                width="100%"
+                                class="small-img"
+                        />
+                    </div>
+                    <div class="small-img-col">
+                        <img
+                                src="assets/imgs/<?php echo $row['product_image2']; ?>"
+                                width="100%"
+                                class="small-img"
+                        />
+                    </div>
+                    <div class="small-img-col">
+                        <img
+                                src="assets/imgs/<?php echo $row['product_image3']; ?>"
+                                width="100%"
+                                class="small-img"
+                        />
+                    </div>
+                    <div class="small-img-col">
+                        <img
+                                src="assets/imgs/<?php echo $row['product_image4']; ?>"
+                                width="100%"
+                                class="small-img"
+                        />
+                    </div>
                 </div>
-                <h5 class="p-name"><?php echo $row['product_name']; ?></h5>
-                <h4 class="p-price">$<?php echo $row['product_price']; ?></h4>
-               <a href="<?php  echo "single_product.php?product_id=". $row['product_id']; ?>"> <button class="buy-btn">Buy Now</button></a>
+            </div>
+            <div class="col-lg-6 col-md-12 col-12">
+                <h6>Men/Shoes</h6>
+                <h3 class="py-4"><?php echo $row['product_name']; ?></h3>
+                <h2><?php echo $row['product_price']; ?>$</h2>
+                <input type="number" value="1"/>
+                <button class="buy-btn">Add To Cart</button>
+                <h4 class="mt-5 mb-5">Product details</h4>
+                <span><?php
+					echo $row['product_description'];
+					?>
+          </span>
             </div>
 		<?php } ?>
     </div>
 </section>
 
-<!--Banner-->
-<section id="banner" class="my-5 py-5">
-    <div class="container">
-        <h4>MID SEASON'S SALE</h4>
-        <h1>
-            Autumn Collection <br/>
-            UP to 30% OFF
-        </h1>
-        <button class="text-uppercase">Shop Now</button>
-    </div>
-</section>
-
-<!--Clothes-->
-<section id="featured" class="my-5">
+<!--Related Products-->
+<section id="related-products" class="my-5 pb-5">
     <div class="container text-center mt-5 py-5">
-        <h3>Dresses & Coats</h3>
+        <h3>Related Products</h3>
         <hr class="mx-auto"/>
-        <p>Here you can check out clothes</p>
-    </div>
-    <div class="row mx-auto container-fluid">
-
-		<?php
-		include( 'server/get_coats.php' );
-
-		while ( $row = $coats_products->fetch_assoc() ) {
-			?>
-            <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-                <img class="img-fluid mb-3"
-                     src="assets/imgs/<?php echo $row['product_image']; ?>"/>
-                <div class="star">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <h5 class="p-name"><?php echo $row['product_name']; ?></h5>
-                <h4 class="p-price">$<?php echo $row['product_price']; ?></h4>
-                <button class="buy-btn">Buy Now</button>
-            </div>
-		<?php } ?>
-    </div>
-</section>
-
-<!--Shoes-->
-<section id="shoes" class="my-5">
-    <div class="container text-center mt-5 py-5">
-        <h3>Shoes</h3>
-        <hr class="mx-auto"/>
-        <p>Here you can check out amazing shoes</p>
     </div>
     <div class="row mx-auto container-fluid">
         <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/shoes1.jpeg"/>
+            <img class="img-fluid mb-3" src="assets/imgs/featured1.jpeg"/>
             <div class="star">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -226,7 +165,7 @@
             <button class="buy-btn">Buy Now</button>
         </div>
         <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/shoes2.jpeg"/>
+            <img class="img-fluid mb-3" src="assets/imgs/featured2.jpeg"/>
             <div class="star">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -239,7 +178,7 @@
             <button class="buy-btn">Buy Now</button>
         </div>
         <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/shoes3.jpeg"/>
+            <img class="img-fluid mb-3" src="assets/imgs/featured3.jpeg"/>
             <div class="star">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -252,70 +191,7 @@
             <button class="buy-btn">Buy Now</button>
         </div>
         <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/shoes4.jpeg"/>
-            <div class="star">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Shoes</h5>
-            <h4 class="p-price">$199.8</h4>
-            <button class="buy-btn">Buy Now</button>
-        </div>
-    </div>
-</section>
-
-<!--Watches-->
-<section id="watches" class="my-5">
-    <div class="container text-center mt-5 py-5">
-        <h3>Best Watches</h3>
-        <hr class="mx-auto"/>
-        <p>Here you can check out unique watches</p>
-    </div>
-    <div class="row mx-auto container-fluid">
-        <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/watch1.jpeg"/>
-            <div class="star">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Shoes</h5>
-            <h4 class="p-price">$199.8</h4>
-            <button class="buy-btn">Buy Now</button>
-        </div>
-        <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/watch2.jpeg"/>
-            <div class="star">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Shoes</h5>
-            <h4 class="p-price">$199.8</h4>
-            <button class="buy-btn">Buy Now</button>
-        </div>
-        <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/watch2.jpeg"/>
-            <div class="star">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Shoes</h5>
-            <h4 class="p-price">$199.8</h4>
-            <button class="buy-btn">Buy Now</button>
-        </div>
-        <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img class="img-fluid mb-3" src="assets/imgs/watch4.jpeg"/>
+            <img class="img-fluid mb-3" src="assets/imgs/featured4.jpeg"/>
             <div class="star">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -412,6 +288,17 @@
         </div>
     </div>
 </footer>
+
+<script>
+    var mainImg = document.getElementById("mainImg");
+    var smallImg = document.getElementsByClassName("small-img");
+
+    for (let i = 0; i < 4; i++) {
+        smallImg[i].onclick = function () {
+            mainImg.src = smallImg[i].src;
+        };
+    }
+</script>
 
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
