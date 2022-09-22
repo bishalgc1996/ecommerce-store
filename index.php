@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +28,7 @@
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 fixed-top">
     <div class="container">
-        <a href="index.html"
+        <a href="index.php"
         ><img src="assets/imgs/logo.jpeg" class="logo"
             /></a>
         <h2 class="brand">Orange</h2>
@@ -45,7 +49,7 @@
         >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="shop.html">Shop</a>
@@ -57,7 +61,7 @@
                     <a class="nav-link" href="contact.html">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a href="cart.html"><i class="fal fa-shopping-bag"></i></a>
+                    <a href="cart.php"><i class="fal fa-shopping-bag"></i></a>
                     <a href="account.html"><i class="fal fa-user-alt"></i></a>
                 </li>
             </ul>
