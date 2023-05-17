@@ -179,12 +179,6 @@ function calculateTotalCart() {
           </div>
         </td>
         <td>
-          <?php  
-
-var_dump($_SESSION['cart']);
-
-?>
-
           <form method="POST" action="cart.php">
             <input type="hidden" name="product_id" value="<?php echo $value['product_id']; ?>" />
             <input type="number" name="product_quantity" value="<?php echo $value['product_quantity']; ?>" />
@@ -211,7 +205,9 @@ var_dump($_SESSION['cart']);
       </table>
     </div>
     <div class="checkout-container">
-      <button class="btn checkout-btn">Checkout</button>
+      <form method="POST" action="checkout.php">
+        <input type="submit" class="btn checkout-btn" value="Checkout" name="checkout">
+      </form>
     </div>
   </section>
 
